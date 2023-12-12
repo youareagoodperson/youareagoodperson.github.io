@@ -16,11 +16,11 @@
 </head>
 <body>
 
-<button onclick="openMovingPopups()">I am a good person !</button>
+<button onclick="openCombinedPopups()">I am a good person !</button>
 
 <script>
 function openMovingPopup(url, name, x, y) {
-    const popup = window.open(url, name, 'width=200,height=150');
+    const popup = window.open(url, name, `width=200,height=150,left=${x},top=${y}`);
     movePopup(popup, x, y);
 }
 
@@ -40,7 +40,22 @@ function movePopup(popup, x, y) {
     }, 1000 / speed);
 }
 
-function openMovingPopups() {
+function openYouTubePopup() {
+    const videoId = '48rz8udZBmQ'; // Replace with your YouTube video ID
+    const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1`;
+
+    // Open a pop-up with the YouTube video
+    const popup = window.open(url, 'You are an idiot !', 'width=560,height=315');
+
+    // Detect when the pop-up is closed
+    popup.addEventListener('beforeunload', function() {
+        // Handle any cleanup or additional actions
+        console.log('YouTube Popup closed');
+    });
+}
+
+function openCombinedPopups() {
+    // Open multiple moving pop-ups
     const numberOfPopups = 5;
 
     for (let i = 0; i < numberOfPopups; i++) {
@@ -48,6 +63,9 @@ function openMovingPopups() {
         const targetY = Math.random() * (window.innerHeight - 150);
         openMovingPopup(`https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif${i + 1}`, `You are an idiot ! ${i + 1}`, targetX, targetY);
     }
+
+    // Open YouTube popup
+    openYouTubePopup();
 }
 </script>
 
