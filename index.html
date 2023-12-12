@@ -17,18 +17,30 @@
 </head>
 <body>
 
+<button onclick="openMovingPopups()">I am a good person !</button>
+
 <script>
 // Function to open a moving pop-up window
 function openMovingPopup(url, name) {
     const popup = window.open(url, name, 'width=200,height=150');
     movePopup(popup);
+
+    // Detect when the pop-up is closed and open a new one
+    popup.addEventListener('beforeunload', function() {
+        openMovingPopup(url, name);
+    });
 }
 
 // Function to periodically move the pop-up window
 function movePopup(popup) {
-    const speed = 10; // Adjust the speed of movement
+    const speed = 5; // Adjust the speed of movement
 
     setInterval(function () {
+        // Check if the pop-up is closed
+        if (popup.closed) {
+            return;
+        }
+
         // Calculate new position
         const newX = Math.random() * (window.innerWidth - 200);
         const newY = Math.random() * (window.innerHeight - 150);
@@ -38,12 +50,10 @@ function movePopup(popup) {
     }, 1000); // Move every 1000 milliseconds (1 second)
 }
 
-// Open three moving pop-up windows on page load
-document.addEventListener("DOMContentLoaded", function () {
+// Function to open multiple moving pop-up windows
+function openMovingPopups() {
     openMovingPopup('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !');
-    openMovingPopup('https://media.tenor.com/FtgLKfbxF84AAAAM/you-are-an-idiot.gif', 'You are an idiot !');
-    openMovingPopup('https://i.makeagif.com/media/5-09-2015/rCae9p.gif', 'You are an idiot !');
-});
+}
 </script>
 
 </body>
