@@ -4,57 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You are a good person !</title>
-    <style>
-        /* Define the styles for the pop-up windows */
-        .popup {
-            width: 200px;
-            height: 150px;
-            position: absolute;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 <body>
 
-<button onclick="openMovingPopups()">I am a good person !</button>
+<button onclick="openMovingModals()">I am a good person !</button>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-// Function to open a moving pop-up window
-function openMovingPopup(url, name) {
-    const popup = window.open(url, name, 'width=200,height=150');
-    movePopup(popup);
+function openMovingModals() {
+    const urls = [
+        'https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif',
+        'https://media.tenor.com/FtgLKfbxF84AAAAM/you-are-an-idiot.gif',
+        'https://i.makeagif.com/media/5-09-2015/rCae9p.gif'
+    ];
 
-    // Listen for messages from the pop-up
-    window.addEventListener('message', function (event) {
-        if (event.source === popup && event.data === 'closed') {
-            openMovingPopup(url, name);
+    urls.forEach(url => {
+        createMovingModal(url);
+    });
+}
+
+function createMovingModal(url) {
+    Swal.fire({
+        html: `<iframe src="${url}" width="100%" height="100%"></iframe>`,
+        width: 300,
+        height: 200,
+        showCloseButton: false,
+        showConfirmButton: false,
+        onOpen: (modalElement) => {
+            moveModal(modalElement);
         }
     });
 }
 
-// Function to periodically move the pop-up window
-function movePopup(popup) {
-    const speed = 5; // Adjust the speed of movement
+function moveModal(modalElement) {
+    const speed = 5;
 
     setInterval(function () {
-        // Check if the pop-up is closed
-        if (popup.closed) {
-            return;
+        if (modalElement.classList.contains('swal2-shown')) {
+            const newX = Math.random() * (window.innerWidth - 300);
+            const newY = Math.random() * (window.innerHeight - 200);
+
+            modalElement.style.transform = `translate(${newX}px, ${newY}px)`;
         }
-
-        // Calculate new position
-        const newX = Math.random() * (window.innerWidth - 200);
-        const newY = Math.random() * (window.innerHeight - 150);
-
-        // Move the pop-up window
-        popup.moveTo(newX, newY);
-    }, 1000); // Move every 1000 milliseconds (1 second)
-}
-
-// Function to open multiple moving pop-up windows
-function openMovingPopups() {
-    openMovingPopup('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !');
+    }, 1000 / speed);
 }
 </script>
 
