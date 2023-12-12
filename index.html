@@ -25,9 +25,11 @@ function openMovingPopup(url, name) {
     const popup = window.open(url, name, 'width=200,height=150');
     movePopup(popup);
 
-    // Detect when the pop-up is closed and open a new one
-    popup.addEventListener('beforeunload', function() {
-        openMovingPopup(url, name);
+    // Listen for messages from the pop-up
+    window.addEventListener('message', function (event) {
+        if (event.source === popup && event.data === 'closed') {
+            openMovingPopup(url, name);
+        }
     });
 }
 
