@@ -5,31 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You are a good person !</title>
     <style>
-        /* Define the spinning animation */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Apply the animation to the pop-up windows */
-        .spinning-popup {
-            animation: spin 5s linear infinite;
+        /* Define the styles for the pop-up windows */
+        .popup {
+            width: 200px;
+            height: 150px;
+            position: absolute;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Open three pop-up windows with a specific class
-    const window1 = window.open('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !', 'width=500,height=300');
-    const window2 = window.open('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !', 'width=500,height=300');
-    const window3 = window.open('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !', 'width=500,height=300');
+// Function to open a moving pop-up window
+function openMovingPopup(url, name) {
+    const popup = window.open(url, name, 'width=200,height=150');
+    movePopup(popup);
+}
 
-    // Add a class to the pop-up windows to apply the spinning animation
-    [window1, window2, window3].forEach((win) => {
-        win.document.body.classList.add('spinning-popup');
-    });
+// Function to periodically move the pop-up window
+function movePopup(popup) {
+    const speed = 10; // Adjust the speed of movement
+
+    setInterval(function () {
+        // Calculate new position
+        const newX = Math.random() * (window.innerWidth - 200);
+        const newY = Math.random() * (window.innerHeight - 150);
+
+        // Move the pop-up window
+        popup.moveTo(newX, newY);
+    }, 1000); // Move every 1000 milliseconds (1 second)
+}
+
+// Open three moving pop-up windows on page load
+document.addEventListener("DOMContentLoaded", function () {
+    openMovingPopup('https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif', 'You are an idiot !');
+    openMovingPopup('https://media.tenor.com/FtgLKfbxF84AAAAM/you-are-an-idiot.gif', 'You are an idiot !');
+    openMovingPopup('https://i.makeagif.com/media/5-09-2015/rCae9p.gif', 'You are an idiot !');
 });
 </script>
 
