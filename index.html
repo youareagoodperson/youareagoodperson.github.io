@@ -16,11 +16,11 @@
 </head>
 <body>
 
-<button onclick="openCombinedPopups()">Yes, i am a good person !</button>
+<button onclick="openCombinedPopups()">Yes, I am a good person !</button>
 
 <script>
 function openMovingPopup(url, name, x, y, width, height) {
-    const popup = window.open(url, name, `width=${width},height=${height},left=${x},top=${y}`);
+    const popup = window.open(url, name, `width=${width},height=${height},left=${x},top=${y},fullscreen=no`);
     movePopup(popup, x, y);
 }
 
@@ -33,8 +33,8 @@ function movePopup(popup, x, y) {
             return;
         }
 
-        const newX = Math.random() * (window.innerWidth - popup.outerWidth);
-        const newY = Math.random() * (window.innerHeight - popup.outerHeight);
+        const newX = Math.random() * (screen.width - popup.outerWidth);
+        const newY = Math.random() * (screen.height - popup.outerHeight);
 
         popup.moveTo(newX, newY);
     }, 1000 / speed);
@@ -45,7 +45,7 @@ function openYouTubePopup() {
     const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1`;
 
     // Open a pop-up with the YouTube video
-    const popup = window.open(url, 'You are an idiot !', 'width=560,height=315');
+    const popup = window.open(url, 'YouTube Popup', 'width=560,height=315,fullscreen=no');
 
     // Detect when the pop-up is closed
     popup.addEventListener('beforeunload', function() {
@@ -59,9 +59,9 @@ function openCombinedPopups() {
     const numberOfPopups = 5;
 
     for (let i = 0; i < numberOfPopups; i++) {
-        const startX = Math.random() * (window.innerWidth - 200);
-        const startY = Math.random() * (window.innerHeight - 150);
-        openMovingPopup(`https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif${i + 1}`, `Window ${i + 1}`, startX, startY, 200, 150);
+        const startX = Math.random() * (screen.width - 200);
+        const startY = Math.random() * (screen.height - 150);
+        openMovingPopup(`https://media.tenor.com/W9t4G8la9w4AAAAM/you-are-idiot.gif${i + 1}`, `Window ${i + 1}`, startX, startY, 200, 150);
     }
 
     // Open YouTube popup
