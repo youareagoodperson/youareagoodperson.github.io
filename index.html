@@ -19,19 +19,12 @@
 <button onclick="openMovingPopups()">I am a good person !</button>
 
 <script>
-function openMovingPopup(url, name) {
+function openMovingPopup(url, name, x, y) {
     const popup = window.open(url, name, 'width=200,height=150');
-    movePopup(popup);
-
-    // Listen for messages from the pop-up
-    window.addEventListener('message', function (event) {
-        if (event.source === popup && event.data === 'closed') {
-            openMovingPopup(url, name);
-        }
-    });
+    movePopup(popup, x, y);
 }
 
-function movePopup(popup) {
+function movePopup(popup, x, y) {
     const speed = 5;
 
     const intervalId = setInterval(function () {
@@ -43,15 +36,17 @@ function movePopup(popup) {
         const newX = Math.random() * (window.innerWidth - 200);
         const newY = Math.random() * (window.innerHeight - 150);
 
-        popup.postMessage({ action: 'move', x: newX, y: newY }, '*');
+        popup.moveTo(newX, newY);
     }, 1000 / speed);
 }
 
 function openMovingPopups() {
-    const numberOfPopups = 5; // Change this number to the desired amount
-    
+    const numberOfPopups = 5;
+
     for (let i = 0; i < numberOfPopups; i++) {
-        openMovingPopup(`https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif${i + 1}`, `You are an idiot ! ${i + 1}`);
+        const targetX = Math.random() * (window.innerWidth - 200);
+        const targetY = Math.random() * (window.innerHeight - 150);
+        openMovingPopup(`https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif${i + 1}`, `You are an idiot ! ${i + 1}`, targetX, targetY);
     }
 }
 </script>
