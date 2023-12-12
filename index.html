@@ -2,14 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">    
-    <title>You Are A Good Person !</title>
+    <title>You are an idiot!</title>
+    <script>
+        function openPopup() {
+            // Specify the URL and window properties
+            var url = 'https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif';
+            var windowName = 'You are an idiot!';
+            var windowFeatures = 'width=600,height=400,scrollbars=yes';
+
+            // Open the popup window
+            var popupWindow = window.open(url, windowName, windowFeatures);
+            
+            // Focus on the new window (optional)
+            if (popupWindow) {
+                popupWindow.focus();
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>You are an idiot !!!</h1>
-    </div>
+
+<button onclick="openPopup()">Open Popup</button>
+
 </body>
 </html>
