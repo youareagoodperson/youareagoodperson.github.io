@@ -4,50 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>You are a good person !</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <style>
+        .popup {
+            width: 200px;
+            height: 150px;
+            position: absolute;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
 
-<button onclick="openMovingModals()">I am a good person !</button>
+<button onclick="openMultiplePopups()">I am a good person !</button>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-function openMovingModals() {
-    const urls = [
-        'https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif',
-        'https://media.tenor.com/FtgLKfbxF84AAAAM/you-are-an-idiot.gif',
-        'https://i.makeagif.com/media/5-09-2015/rCae9p.gif'
-    ];
+let popupCounter = 0;
 
-    urls.forEach(url => {
-        createMovingModal(url);
+function openPopup(url, name) {
+    const popup = window.open(url, name, 'width=200,height=150');
+    
+    // Detect when the pop-up is closed
+    popup.addEventListener('beforeunload', function() {
+        // Increment the counter when a pop-up is closed
+        popupCounter++;
     });
 }
 
-function createMovingModal(url) {
-    Swal.fire({
-        html: `<iframe src="${url}" width="100%" height="100%"></iframe>`,
-        width: 300,
-        height: 200,
-        showCloseButton: false,
-        showConfirmButton: false,
-        onOpen: (modalElement) => {
-            moveModal(modalElement);
-        }
-    });
-}
-
-function moveModal(modalElement) {
-    const speed = 5;
-
-    setInterval(function () {
-        if (modalElement.classList.contains('swal2-shown')) {
-            const newX = Math.random() * (window.innerWidth - 300);
-            const newY = Math.random() * (window.innerHeight - 200);
-
-            modalElement.style.transform = `translate(${newX}px, ${newY}px)`;
-        }
-    }, 1000 / speed);
+function openMultiplePopups() {
+    const numberOfPopups = 5; // Change this number to the desired amount
+    
+    for (let i = 0; i < numberOfPopups; i++) {
+        openPopup(`https://media.tenor.com/W9t4G8la9w4AAAAd/you-are-idiot.gif${i + 1}`, `You are an idiot ! ${i + 1}`);
+    }
 }
 </script>
 
